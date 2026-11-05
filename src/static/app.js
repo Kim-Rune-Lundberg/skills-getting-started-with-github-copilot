@@ -161,3 +161,18 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize app
   fetchActivities();
 });
+
+def test_signup_adds_participant(client):
+    # Arrange
+    activity_name = "Art Club"
+    email = "student@example.com"
+
+    # Act
+    response = client.post(
+        f"/activities/{activity_name}/signup",
+        params={"email": email},
+    )
+
+    # Assert
+    assert response.status_code == 200
+    assert email in activities[activity_name]["participants"]
